@@ -6,8 +6,18 @@
 	objectVersion = 50;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		83DDE9502079423700DC31F5 /* DynamicByteQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = 83DDE94E2079423700DC31F5 /* DynamicByteQueue.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		83DDE9512079423700DC31F5 /* DynamicByteQueue.c in Sources */ = {isa = PBXBuildFile; fileRef = 83DDE94F2079423700DC31F5 /* DynamicByteQueue.c */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
+		1117D6E4DEFC230234F44779 /* macInstall.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = macInstall.sh; sourceTree = "<group>"; };
+		1117DB1AFD47B29B4614C2E2 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		1117DB3631480A55AB472529 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		83DDE946207941D400DC31F5 /* libDynamicByteQueue.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libDynamicByteQueue.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		83DDE94E2079423700DC31F5 /* DynamicByteQueue.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DynamicByteQueue.h; sourceTree = "<group>"; };
+		83DDE94F2079423700DC31F5 /* DynamicByteQueue.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = DynamicByteQueue.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -24,7 +34,11 @@
 		83DDE93D207941D400DC31F5 = {
 			isa = PBXGroup;
 			children = (
+				83DDE94D207941F200DC31F5 /* DynamicByteQueue */,
 				83DDE947207941D400DC31F5 /* Products */,
+				1117DB1AFD47B29B4614C2E2 /* LICENSE */,
+				1117D6E4DEFC230234F44779 /* macInstall.sh */,
+				1117DB3631480A55AB472529 /* README.md */,
 			);
 			sourceTree = "<group>";
 		};
@@ -36,6 +50,15 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		83DDE94D207941F200DC31F5 /* DynamicByteQueue */ = {
+			isa = PBXGroup;
+			children = (
+				83DDE94E2079423700DC31F5 /* DynamicByteQueue.h */,
+				83DDE94F2079423700DC31F5 /* DynamicByteQueue.c */,
+			);
+			path = DynamicByteQueue;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -43,6 +66,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				83DDE9502079423700DC31F5 /* DynamicByteQueue.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -102,6 +126,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				83DDE9512079423700DC31F5 /* DynamicByteQueue.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
