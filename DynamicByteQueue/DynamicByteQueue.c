@@ -61,21 +61,43 @@ size_t pgDynamicQueueGrowBuffer(PGDynamicByteQueueStruct *queue, PGBool *err) {
 }
 
 PGDynamicByteQueueStruct *pgDynamicQueueInit(PGDynamicByteQueueStruct *queue, size_t initialSize) {
-    PGBool f = FALSE;
+    size_t stsz = sizeof(PGDynamicByteQueueStruct);
 
-    if(!queue) {
-        f     = TRUE;
-        queue = malloc(sizeof(PGDynamicByteQueueStruct));
+    if(queue) {
+        memset(queue, 0, stsz);
+    }
+    else {
+        queue = calloc(1, stsz);
+        if(queue) queue->dealloc = TRUE;
     }
 
     if(queue) {
-        memset(queue, 0, sizeof(PGDynamicByteQueueStruct));
         queue->size  = (initialSize ?: PG_DEFAULT_SIZE);
         queue->queue = calloc(1, queue->size);
 
         if(!queue->queue) {
-            if(f) free(queue);
+            if(queue->dealloc) free(queue);
             return NULL;
+        }
+    }
+
+    return queue;
+}
+
+PGDynamicByteQueueStruct *pgDynamicQueueDealloc(PGDynamicByteQueueStruct *queue) {
+    if(queue) {
+        PGBool da = queue->dealloc;
+
+        if(queue->queue) {
+            memset(queue->queue, 0, queue->size);
+            free(queue->queue);
+        }
+
+        memset(queue, 0, sizeof(PGDynamicByteQueueStruct));
+
+        if(da) {
+            free(queue);
+            queue = NULL;
         }
     }
 

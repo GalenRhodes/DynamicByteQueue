@@ -27,9 +27,12 @@ typedef struct __pg_dynamic_byte_queue_struct {
     size_t    head;
     size_t    tail;
     size_t    size;
+    PGBool    dealloc;
 }               PGDynamicByteQueueStruct;
 
 PGDynamicByteQueueStruct *pgDynamicQueueInit(PGDynamicByteQueueStruct *queue, size_t initialSize);
+
+PGDynamicByteQueueStruct *pgDynamicQueueDealloc(PGDynamicByteQueueStruct *queue);
 
 PGBool pgDynamicQueueIsFull(PGDynamicByteQueueStruct *queue);
 
