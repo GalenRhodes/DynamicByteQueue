@@ -22,6 +22,10 @@
     #endif
 #endif
 
+#define TRUE            ((char)(1))
+#define FALSE           ((char)(0))
+#define PG_DEFAULT_SIZE ((size_t)(64 * 1024))
+
 NS_INLINE size_t pgDynamicQueueNextHead(PGDynamicByteQueueStruct *queue) {
     return ((queue->head + 1) % queue->size);
 }
@@ -58,6 +62,36 @@ size_t pgDynamicQueueGrowBuffer(PGDynamicByteQueueStruct *queue, PGBool *err) {
     }
 
     return queue->tail;
+}
+
+size_t pgDynamicQueueLength(PGDynamicByteQueueStruct *queue) {
+    return (queue ? ((queue->head <= queue->tail) ? (queue->tail - queue->head) : ((queue->size - queue->head) + queue->tail)) : 0);
+}
+
+PGBytePtr pgDynamicQueueCopyData(PGDynamicByteQueueStruct *queue, size_t *length) {
+    PGBytePtr copy = NULL;
+
+    if(queue) {
+        size_t len = pgDynamicQueueLength(queue);
+        if(length) *length = len;
+
+        copy = calloc(1, (len + 1));
+
+        if(copy && len) {
+            PGBytePtr queueStart = (queue->queue + queue->head);
+
+            if(queue->head <= queue->tail) {
+                memcpy(copy, queueStart, len);
+            }
+            else {
+                size_t nlen = (len - queue->tail);
+                memcpy(copy, queueStart, nlen);
+                if(queue->tail) memcpy((copy + nlen), queue->queue, queue->tail);
+            }
+        }
+    }
+
+    return copy;
 }
 
 PGDynamicByteQueueStruct *pgDynamicQueueInit(PGDynamicByteQueueStruct *queue, size_t initialSize) {

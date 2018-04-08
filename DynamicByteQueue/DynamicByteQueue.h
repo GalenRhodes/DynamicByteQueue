@@ -18,10 +18,6 @@ typedef uint8_t     PGByte;
 typedef PGByte      *PGBytePtr;
 typedef signed char PGBool;
 
-#define TRUE            ((char)(1))
-#define FALSE           ((char)(0))
-#define PG_DEFAULT_SIZE ((size_t)(64 * 1024))
-
 typedef struct __pg_dynamic_byte_queue_struct {
     PGBytePtr queue;
     size_t    head;
@@ -49,6 +45,10 @@ PGBool pgDynamicQueueEnqueue(PGDynamicByteQueueStruct *queue, uint8_t byte);
 PGBool pgDynamicQueueEnqueueAll(PGDynamicByteQueueStruct *queue, PGBytePtr buffer, size_t len);
 
 PGBool pgDynamicQueueRequeueAll(PGDynamicByteQueueStruct *queue, PGBytePtr buffer, size_t len);
+
+size_t pgDynamicQueueLength(PGDynamicByteQueueStruct *queue);
+
+PGBytePtr pgDynamicQueueCopyData(PGDynamicByteQueueStruct *queue, size_t *length);
 
 #if __has_extension(blocks)
 
