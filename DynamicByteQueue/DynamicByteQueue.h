@@ -14,36 +14,44 @@
 
 __BEGIN_DECLS
 
+typedef uint8_t PGByte;
+typedef PGByte  *PGBytePtr;
+typedef char    PGBool;
+
+#define TRUE            ((char)(1))
+#define FALSE           ((char)(0))
+#define PG_DEFAULT_SIZE ((size_t)(64 * 1024))
+
 typedef struct __pg_dynamic_byte_queue_struct {
-    uint8_t *queue;
-    size_t  head;
-    size_t  tail;
-    size_t  size;
-} PGDynamicByteQueueStruct;
+    PGBytePtr queue;
+    size_t    head;
+    size_t    tail;
+    size_t    size;
+}               PGDynamicByteQueueStruct;
 
 PGDynamicByteQueueStruct *pgDynamicQueueInit(PGDynamicByteQueueStruct *queue, size_t initialSize);
 
-char pgDynamicQueueIsFull(PGDynamicByteQueueStruct *queue);
+PGBool pgDynamicQueueIsFull(PGDynamicByteQueueStruct *queue);
 
-char pgDynamicQueueIsEmpty(PGDynamicByteQueueStruct *queue);
+PGBool pgDynamicQueueIsEmpty(PGDynamicByteQueueStruct *queue);
 
 int pgDynamicQueueDequeue(PGDynamicByteQueueStruct *queue);
 
 int pgDynamicQueuePop(PGDynamicByteQueueStruct *queue);
 
-char pgDynamicQueueRequeue(PGDynamicByteQueueStruct *queue, uint8_t byte);
+PGBool pgDynamicQueueRequeue(PGDynamicByteQueueStruct *queue, uint8_t byte);
 
-char pgDynamicQueueEnqueue(PGDynamicByteQueueStruct *queue, uint8_t byte);
+PGBool pgDynamicQueueEnqueue(PGDynamicByteQueueStruct *queue, uint8_t byte);
 
-char pgDynamicQueueEnqueueAll(PGDynamicByteQueueStruct *queue, uint8_t *buffer, size_t len);
+PGBool pgDynamicQueueEnqueueAll(PGDynamicByteQueueStruct *queue, PGBytePtr buffer, size_t len);
 
-char pgDynamicQueueRequeueAll(PGDynamicByteQueueStruct *queue, uint8_t *buffer, size_t len);
+PGBool pgDynamicQueueRequeueAll(PGDynamicByteQueueStruct *queue, PGBytePtr buffer, size_t len);
 
 #if __has_extension(blocks)
 
-typedef char (^PGDynamicByteQueueOpBlock)(uint8_t *buffer, size_t size, size_t *head, size_t *tail, char *error, char *eof);
+typedef PGBool (^PGDynamicByteQueueOpBlock)(PGBytePtr buffer, size_t size, size_t *head, size_t *tail, PGBool *error, PGBool *eof);
 
-char pgDynamicQueueOperation(PGDynamicByteQueueStruct *queue, PGDynamicByteQueueOpBlock opBlock, char *error, char *eof);
+PGBool pgDynamicQueueOperation(PGDynamicByteQueueStruct *queue, PGDynamicByteQueueOpBlock opBlock, PGBool *error, PGBool *eof);
 
 #endif
 
