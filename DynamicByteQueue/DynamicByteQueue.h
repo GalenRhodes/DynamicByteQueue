@@ -14,9 +14,9 @@
 
 __BEGIN_DECLS
 
-typedef uint8_t PGByte;
-typedef PGByte  *PGBytePtr;
-typedef char    PGBool;
+typedef uint8_t     PGByte;
+typedef PGByte      *PGBytePtr;
+typedef signed char PGBool;
 
 #define TRUE            ((char)(1))
 #define FALSE           ((char)(0))
@@ -28,7 +28,7 @@ typedef struct __pg_dynamic_byte_queue_struct {
     size_t    tail;
     size_t    size;
     PGBool    dealloc;
-}               PGDynamicByteQueueStruct;
+}                   PGDynamicByteQueueStruct;
 
 PGDynamicByteQueueStruct *pgDynamicQueueInit(PGDynamicByteQueueStruct *queue, size_t initialSize);
 
